@@ -2,14 +2,14 @@ const fetch = require('node-fetch')
 const express = require('express')
 const app = express()
 const port = 5372
-let server0
+let broker
 const registry = 'http://localhost:8080'
 
 const getAddress = () =>
   fetch(registry)
     .then(res => res.json())
     .then(res => {
-      server0 = res.server0
+      broker = res.broker
       console.log(res)
       if (!server1) setTimeout(getAddress, 1000)
     })
@@ -28,16 +28,21 @@ const register = (adress, registry) =>
   })
 
 const fetchBack = async () => {
-  if (!server0) await getAddress()
-  if (!server0) return setTimeout(fetchBack, 1000)
-  return fetch(server0)
-    .then(res => res.text())
-    .then(console.log)
+  if (!broker) await getAddress()
+  if (!broker) return setTimeout(fetchBack, 1000)
+  return fetch(broker + '/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ dest: 'server0', message: 'ping' }),
+  }).then(res => res.text())
 }
 
-app.get('/', (req, res) => {
+app.get('/pong', (req, res) => {
   setTimeout(fetchBack, 500)
-  res.send('pong')
+  res.send('ok')
 })
 
 app.listen(port, () => {
