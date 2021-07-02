@@ -1,0 +1,5 @@
+FROM node:14
+COPY . .
+RUN yarn install
+EXPOSE 5372
+CMD [ "node", "s1" ]
