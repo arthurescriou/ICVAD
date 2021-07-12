@@ -2,7 +2,7 @@ require('dotenv').config()
 const fetch = require('node-fetch')
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 5372
+const port = parseInt(process.env.PORT) || 5372
 let broker
 const registry = process.env.REGISTRY || 'http://localhost:8080'
 const address = process.env.ADDRESS || 'http://localhost'

@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = process.env.PORT || 1111
+const port = parseInt(process.env.PORT) || 1111
 const registry = process.env.REGISTRY || 'http://localhost:8080'
 const address = process.env.ADDRESS || 'http://localhost'
 app.use(bodyParser())
