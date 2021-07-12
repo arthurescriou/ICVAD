@@ -13,7 +13,7 @@ let data = {}
 const sendMessage = ({ dest, message }) => {
   console.log({ dest, message, url: `${data[dest]}/${message}` })
   if (data[dest]) return fetch(`${data[dest]}/${message}`)
-  else return getAddress().then(sendMessage({ dest, message }))
+  else return getAddresses().then(sendMessage({ dest, message }))
 }
 
 app.post('/send', (req, res) => {
