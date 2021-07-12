@@ -19,7 +19,8 @@ const sendMessage = ({ dest, message }) => {
         () =>
           getAddresses()
             .then(sendMessage({ dest, message }))
-            .then(resolve),
+            .then(resolve)
+            .catch(reject),
         1000
       )
     })
