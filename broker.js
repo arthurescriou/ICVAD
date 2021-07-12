@@ -1,10 +1,11 @@
+require('dotenv').config()
 const fetch = require('node-fetch')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 1111
-const registry = 'http://localhost:8080'
-
+const port = process.env.PORT || 1111
+const registry = process.env.REGISTRY || 'http://localhost:8080'
+const address = process.env.ADDRESS || 'http://localhost'
 app.use(bodyParser())
 
 let data = {}
@@ -21,7 +22,7 @@ app.post('/send', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at ${address}:${port}`)
 })
 
 const getAddresses = () =>
@@ -47,4 +48,4 @@ const register = (adress, registry) =>
   })
 
 getAddresses()
-register(`http://localhost:${port}`, registry)
+register(`${address}:${port}`, registry)

@@ -1,9 +1,11 @@
+require('dotenv').config()
 const fetch = require('node-fetch')
 const express = require('express')
 const app = express()
-const port = 5372
+const port = process.env.PORT || 5372
 let broker
-const registry = 'http://localhost:8080'
+const registry = process.env.REGISTRY || 'http://localhost:8080'
+const address = process.env.ADDRESS || 'http://localhost'
 
 const getAddress = () =>
   fetch(registry)
@@ -46,8 +48,8 @@ app.get('/pong', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at ${address}:${port}`)
 })
 
 getAddress()
-register(`http://localhost:${port}`, registry)
+register(`${address}:${port}`, registry)
