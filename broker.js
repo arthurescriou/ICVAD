@@ -11,8 +11,9 @@ app.use(bodyParser())
 let data = {}
 
 const sendMessage = ({ dest, message }) => {
-  console.log({ dest, message })
-  return fetch(`${data[dest]}/${message}`)
+  console.log({ dest, message, url: `${data[dest]}/${message}` })
+  if (data[dest]) return fetch(`${data[dest]}/${message}`)
+  else return getAddress().then(sendMessage({ dest, message }))
 }
 
 app.post('/send', (req, res) => {
