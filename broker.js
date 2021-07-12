@@ -14,10 +14,15 @@ const sendMessage = ({ dest, message }) => {
   console.log({ dest, message, url: `${data[dest]}/${message}` })
   if (data[dest]) return fetch(`${data[dest]}/${message}`)
   else
-    return setTimeout(
-      () => getAddresses().then(sendMessage({ dest, message })),
-      1000
-    )
+    return new Promise((resovle, reject) => {
+      setTimeout(
+        () =>
+          getAddresses()
+            .then(sendMessage({ dest, message }))
+            .then(resolve),
+        1000
+      )
+    })
 }
 
 app.post('/send', (req, res) => {
