@@ -36,10 +36,10 @@ const getAddresses = () =>
     .then(res => {
       data = res
       console.log(res)
-      if (!server1) setTimeout(getAddress, 1000)
+      if (!server1) setTimeout(getAddresses, 1000)
     })
     .catch(err => {
-      err => setTimeout(getAddress, 1000)
+      err => setTimeout(getAddresses, 1000)
     })
 
 const register = (adress, registry) =>
